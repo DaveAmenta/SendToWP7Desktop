@@ -1,0 +1,110 @@
+﻿<Window x:Class="SendToWP7Desktop.DropboxConfigure"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Dropbox Setup" Height="498" Width="588"
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style x:Key="NoHeaderStyle" TargetType="{x:Type GridViewColumnHeader}">
+            <Setter Property="Visibility" Value="Collapsed" />
+        </Style>
+        <Style TargetType="{x:Type Hyperlink}">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="#3399FF" />
+                </Trigger>
+            </Style.Triggers>
+            <Setter Property="Foreground" Value="#0066CC" />
+        </Style>
+
+    </Window.Resources>
+    <Grid>
+        <DockPanel>
+
+            <Border VerticalAlignment="Bottom" DockPanel.Dock="Bottom" BorderThickness="0,1,0,0" BorderBrush="#DFDFDF">
+                <Grid Height="36" Background="#F0F0F0">
+                    <DockPanel>
+                        <TextBlock DockPanel.Dock="Left"
+                                   Margin="24, 0, 0, 0"
+                                   VerticalAlignment="Center">
+                            <Hyperlink RequestNavigate="HelpAndSuport_RequestNavigate" Name="HelpAndSuport" NavigateUri="http://www.daveamenta.com">Help and Support</Hyperlink>
+                        </TextBlock>
+                        <Button Name="btnSave" Click="btnSave_Click" Padding="10,0,10,0" Height="22" Margin="8,0,24,0" DockPanel.Dock="Right" HorizontalAlignment="Right" Content="Save" FontWeight="Bold"/>
+                        <Button Name="btnCancel" Click="btnCancel_Click" Padding="10,0,10,0" Height="22" Margin="8,0,24,0" DockPanel.Dock="Right" HorizontalAlignment="Right" Content="Cancel Dropbox Setup" IsCancel="True" />
+                    </DockPanel>
+                </Grid>
+            </Border>
+
+            <TextBlock DockPanel.Dock="Top" Text="Configure Dropbox"
+                        FontSize="16"
+                        FontFamily="Segoe UI, Verdana"
+                        Foreground="#003399"
+                        Padding="24,8,0,8" />
+
+            <Border Margin="10">
+                <DockPanel>
+               
+                    
+               
+                    <TextBlock Padding="10" DockPanel.Dock="Top">
+                    Using Dropbox with Send to WP7 requires just a few minutes of setup.
+                </TextBlock>
+                
+                <TextBlock Padding="10,10,10,4" DockPanel.Dock="Top" TextWrapping="Wrap">
+                    <Run FontWeight="Bold">If you have changed</Run> the default location of your dropbox, Select the location of your <Run FontWeight="Bold">My Dropbox</Run> folder below.  If you used the default location, this step is not required.
+                </TextBlock>
+
+                <DockPanel DockPanel.Dock="Top">
+                    <TextBlock DockPanel.Dock="Left" Padding="10,0,10,0" VerticalAlignment="Center" Text="Dropbox Location" />
+                    <Button DockPanel.Dock="Right" Padding="10,0,10,0" Content="Select Folder" Name="btnSelect" Click="btnSelect_Click" />
+                    <TextBox KeyUp="DropboxPath_KeyUp" Text="{Binding Path=DropboxPath,Mode=TwoWay,UpdateSourceTrigger=Explicit}" />
+                </DockPanel>
+
+                <TextBlock Padding="10,10,10,4" DockPanel.Dock="Top" TextWrapping="Wrap">
+                    In order to generate links to your Dropbox <Run FontWeight="Bold">Public folder</Run>, a sample link is needed.  <Hyperlink Name="hOpen" Click="hOpen_Click">Open your Dropbox Public folder</Hyperlink>, right-click on any file, select <Run FontWeight="Bold">Dropbox</Run>, then select <Run FontWeight="Bold">Copy Public Link</Run>.  Paste the link below.
+                </TextBlock>
+
+                <DockPanel DockPanel.Dock="Top">
+                    <TextBlock DockPanel.Dock="Left" Padding="10,0,10,0" VerticalAlignment="Center" Text="Public URL" />
+                    <TextBox KeyUp="DropboxURL_KeyUp" Text="{Binding Path=DropboxURL, Mode=TwoWay,UpdateSourceTrigger=Explicit}" />
+                </DockPanel>
+
+                <CheckBox Margin="20,10,10,10" DockPanel.Dock="Top" IsChecked="{Binding ObfuscateFileName}">
+                    Append a random number to the name of files that are copied into the Public folder.
+                </CheckBox>
+
+                <Grid HorizontalAlignment="Center" DockPanel.Dock="Bottom">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    
+                    <TextBlock Padding="10" Grid.Row="0" Grid.Column="0">
+                        Dropbox Path:
+                    </TextBlock>
+                    <TextBlock Padding="10" Grid.Row="0" Grid.Column="2">
+                        Dropbox URL:
+                    </TextBlock>
+
+                    <TextBlock Name="lblVPath" Padding="10" Grid.Row="0" Grid.Column="1" FontWeight="Bold">
+                        [Dropbox Path]
+                    </TextBlock>
+                    <TextBlock Name="lblVURL" Padding="10" Grid.Row="0" Grid.Column="3" FontWeight="Bold">
+                        [Dropbox URL]
+                    </TextBlock>
+                </Grid>
+                
+                <Image DockPanel.Dock="Bottom" Source="Images/DropboxSetup.png" />
+                
+                <TextBlock />
+                
+            </DockPanel>
+            </Border>
+        </DockPanel>
+    </Grid>
+</Window>

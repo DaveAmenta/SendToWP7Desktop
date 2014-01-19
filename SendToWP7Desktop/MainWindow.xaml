@@ -1,0 +1,228 @@
+﻿<Window x:Class="SendToWP7Desktop.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Send to WP7" Height="667" Width="700"
+        WindowState="Minimized">
+    <Window.Resources>
+        <Style x:Key="NoHeaderStyle" TargetType="{x:Type GridViewColumnHeader}">
+            <Setter Property="Visibility" Value="Collapsed" />
+        </Style>
+        <Style TargetType="{x:Type Hyperlink}">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="#3399FF" />
+                </Trigger>
+            </Style.Triggers>
+            <Setter Property="Foreground" Value="#0066CC" />
+        </Style>
+
+    </Window.Resources>
+    <Grid>
+        <DockPanel>
+
+            <Border VerticalAlignment="Bottom" DockPanel.Dock="Bottom" BorderThickness="0,1,0,0" BorderBrush="#DFDFDF">
+                <Grid Height="36" Background="#F0F0F0">
+                    <DockPanel>
+                        <TextBlock DockPanel.Dock="Left"
+                                   Margin="24, 0, 0, 0"
+                                   VerticalAlignment="Center">
+                            <Hyperlink RequestNavigate="HelpAndSuport_RequestNavigate" Name="HelpAndSuport" NavigateUri="http://www.daveamenta.com">Help and Support</Hyperlink>
+                        </TextBlock>
+                        <Button Name="btnCancel" Click="btnCancel_Click" Height="22" Width="65" Margin="8,0,24,0" DockPanel.Dock="Right" HorizontalAlignment="Right" Content="Quit" IsCancel="True" />
+                    </DockPanel>
+                </Grid>
+            </Border>
+ 
+            <DockPanel DockPanel.Dock="Top" LastChildFill="False">
+
+                <StackPanel VerticalAlignment="Center" DockPanel.Dock="Left" Orientation="Vertical">
+                    <TextBlock  Text="Send to WP7 Desktop"
+                        FontSize="16"
+                        VerticalAlignment="Center"
+                        FontFamily="Segoe UI, Verdana"
+                        Foreground="#003399"
+                        Padding="24,4,0,8" />
+                    <TextBlock Padding="24,4,0,8"
+                               FontFamily="Segoe UI, Verdana"
+                               FontStyle="Italic"
+                               >Send anything to your phone</TextBlock>
+                </StackPanel>
+                <Border BorderBrush="Black" Margin="10,10,10,0" BorderThickness="2" DockPanel.Dock="Right" >
+                    <Image Width="87" Height="87"  VerticalAlignment="Top" Stretch="Fill" Source="/Images/SendToWP7.png" />
+                </Border>
+           </DockPanel>
+            <Grid Margin="12">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="240" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                
+                <Border Padding="0,0,10,0">
+                    <StackPanel Grid.Column="0" Orientation="Vertical">
+                        <TextBlock  Text="1.  Connect to your phone"
+                        FontSize="16"
+                                FontWeight="Bold"
+                        VerticalAlignment="Center"
+                        FontFamily="Segoe UI, Verdana"
+                        Foreground="#003399"
+                        Padding="4" />
+
+                        <TextBlock TextWrapping="Wrap" Margin="4" DockPanel.Dock="Top">
+                        Enter the pair code found in the <Run FontWeight="Bold">Settings page</Run> of the <Run FontWeight="Bold">Send To WP7</Run> app on your Windows Phone.
+                        </TextBlock>
+
+                        <TextBlock DockPanel.Dock="Left"
+                                   Margin="4"
+                                   VerticalAlignment="Center">
+                    <Hyperlink RequestNavigate="FindPairCode_RequestNavigate" Name="FindPairCode" NavigateUri="http://www.daveamenta.com/chrome-to-wp7">Where is my pair code?</Hyperlink>
+                        </TextBlock>
+
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Margin="4" VerticalAlignment="Center" Text="Pair Code" />
+                            <TextBox Margin="4"  Width="80" HorizontalAlignment="Center" Name="txtPairCode" Text="{Binding PairCode, Mode=TwoWay}" />
+                            <Button Margin="4" Padding="8,2,8,2" Content="Save" Click="Save_Click" />
+
+                        </StackPanel>
+
+                        <TextBlock Margin="4" TextWrapping="Wrap" Name="lblPairCodeValidate">
+
+                        </TextBlock>
+
+                        <TextBlock TextWrapping="Wrap" Margin="4" DockPanel.Dock="Top">
+                            When uploading images saved on my clipboard, save them as
+                        </TextBlock>
+                        <RadioButton Margin="4" Content="JPEG (great for photos)" IsChecked="{Binding UseJPEG,Mode=TwoWay}" />
+                        <RadioButton Margin="4" Content="PNG (great for screenshots)" IsChecked="{Binding UsePNG,Mode=TwoWay}" />
+
+                        <TextBlock HorizontalAlignment="Center"
+                                   Margin="4,10,4,4"
+                                   VerticalAlignment="Center">
+                            <Hyperlink RequestNavigate="ConfigureTransferDestination_RequestNavigate" Name="ConfigureTransferDestination" NavigateUri="http://www.daveamenta.com/chrome-to-wp7">Configure transfer destination</Hyperlink>
+                        </TextBlock>
+
+                        <CheckBox Margin="4,10,4,4" IsChecked="{Binding UseFixedIPAddress}" Name="chkAutoIP" Content="Specify an address for local sharing" />
+                        <Grid Margin="24,4,10,10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock VerticalAlignment="Center" Grid.Column="0">Fixed IP Address:</TextBlock>
+                            <TextBox VerticalAlignment="Center" Grid.Column="1"
+                                     IsEnabled="{Binding ElementName=chkAutoIP, Path=IsChecked}"
+                                     Text="{Binding FixedIPAddress, UpdateSourceTrigger=PropertyChanged}"
+                                     />
+                        </Grid>
+
+                        </StackPanel>
+                </Border>
+               
+
+                <Border Padding="10,0,0,0" Grid.Column="1" Margin="-1,0,0,0" BorderThickness="1,0,0,0" BorderBrush="#DFDFDF">
+                    <StackPanel  Orientation="Vertical">
+                        <TextBlock  Text="2.  Send stuff to your phone"
+                        FontSize="16"
+                                FontWeight="Bold"
+                        VerticalAlignment="Center"
+                        FontFamily="Segoe UI, Verdana"
+                        Foreground="#003399"
+                        Padding="4,4,0,8" />
+
+                        <TextBlock TextWrapping="Wrap" Margin="4" DockPanel.Dock="Top">
+                            Send to WP7 is the best way to send links, text, photos, documents and videos to your phone.  Send to WP7 Desktop is one part of the package.  To send links with just the click of a button, install the extension for your browser.
+                        </TextBlock>
+                        
+                        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                            <Image Width="64" Height="64" Source="/Images/Explorer64.png" />
+                            <Image Width="64" Height="64" Source="/Images/Firefox64.png" />
+                            <Image Width="64" Height="64" Source="/Images/Opera64.png" />
+                            <Image Width="64" Height="64" Source="/Images/Chrome64.png" />
+                        </StackPanel>
+
+                        <TextBlock HorizontalAlignment="Center"
+                                   Margin="4"
+                                   VerticalAlignment="Center">
+                            <Hyperlink RequestNavigate="ConfigureBrowser_RequestNavigate" Name="ConfigureBrowser" NavigateUri="http://www.daveamenta.com/chrome-to-wp7">Configure my browser now.</Hyperlink>
+                        </TextBlock>
+
+                        <TextBlock TextWrapping="Wrap" Margin="4" DockPanel.Dock="Top">
+                            Send to WP7 Desktop includes two great ways to quickly send files to your phone.  
+                        </TextBlock>
+                        
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <Image Margin="0,0,10,10" Grid.Column="0" Grid.Row="0" Source="/Images/SendToWP7Desktop.png" />
+                            <TextBlock Margin="0,0,10,10" TextWrapping="Wrap" Grid.Column="0" Grid.Row="1">
+                                Right click on any file, and select <Run FontWeight="Bold">Send To WP7</Run>.
+                            </TextBlock>
+
+                            <Image Margin="10,0,0,10" Grid.Column="1" Grid.Row="0" DockPanel.Dock="Right" Source="/Images/SendToWP7Desktop_JumpList.png" />
+                            <TextBlock Margin="10,0,0,10" TextWrapping="Wrap" Grid.Column="1" Grid.Row="1">
+                                Right click on the <Run FontWeight="Bold">Send To WP7 Desktop</Run> icon in your taskbar for more options.
+                            </TextBlock>
+                        </Grid>
+
+
+                    </StackPanel>
+                </Border>
+
+
+                <!--
+                <TextBlock Padding="10" DockPanel.Dock="Top">
+                    To start using <Run FontWeight="Bold">Send To WP7 Desktop</Run>, enter the pair code for your Windows Phone.
+                </TextBlock>
+                
+                
+                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                    <TextBlock Padding="20,0,20,0" VerticalAlignment="Center" Text="Pair Code" />
+                    <TextBox Width="100" Name="txtPairCode" Text="{Binding PairCode, Mode=TwoWay}" />
+                    <Button Padding="10,0,10,0" Content="Save" Click="Save_Click" />
+                    <TextBlock DockPanel.Dock="Left"
+                                   Margin="24, 0, 0, 0"
+                                   VerticalAlignment="Center">
+                    <Hyperlink RequestNavigate="FindPairCode_RequestNavigate" Name="FindPairCode" NavigateUri="http://www.daveamenta.com/chrome-to-wp7">Where is my pair code?</Hyperlink>
+                    </TextBlock>
+                </StackPanel>
+                
+                <TextBlock Name="lblPairCodeValidate" DockPanel.Dock="Top">
+                    
+                </TextBlock>
+
+
+                <TextBlock TextWrapping="Wrap" DockPanel.Dock="Top" Padding="10">
+                        Quickly send photos, documents, videos, music, notes and more directly to your Windows Phone.  To get started, <Run FontWeight="Bold">right-click</Run> on the icon in your taskbar.
+                </TextBlock>
+                <Border Padding="10">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Image Margin="20,20,30,20" Grid.Column="0" Grid.Row="0" DockPanel.Dock="Left" Source="/Images/SendToWP7Desktop.png" />
+                        <TextBlock Padding="0,0,10,0" TextWrapping="Wrap" Grid.Column="0" Grid.Row="1">
+                        Quickly send any kind of file (photos, documents, videos, etc.), right from <Run FontWeight="Bold">Windows Explorer</Run>.  Your file will be uploaded to a free cloud storage service.
+                        </TextBlock>
+
+                        <Image Margin="10,0,0,0" Grid.Column="1" Grid.Row="0" DockPanel.Dock="Right" Source="/Images/SendToWP7Desktop_JumpList.png" />
+                        <TextBlock Padding="10,0,0,0" TextWrapping="Wrap" Grid.Column="1" Grid.Row="1">
+                        Prepare a long email or SMS on your computer, then send it on the phone.  Send your clipboard content (text, images or files) directly to the phone using a free cloud storage service.
+                        </TextBlock>
+                    </Grid>
+                </Border>
+                -->
+            </Grid>
+        </DockPanel>
+    </Grid>
+</Window>
